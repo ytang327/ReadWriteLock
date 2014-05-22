@@ -46,26 +46,6 @@ void RWMutex_destroy(RWMutex * rw){
     pthread_cond_destroy(&rw->write);
 }
 
-/*void RWMutex_rdlock(RWMutex * rw){
-    int cycle;
-    pthread_mutex_lock(&rw->mutex);
-    cycle = rw->cycle;
-    if (--rw->counter == 0){
-        ++rw->cycle;
-        rw->counter = rw->quota;
-        pthread_cond_broadcast(&rw->read);
-    }
-    if (rw->w_active || ((rw->w_wait > 0) && (cycle == rw->cycle))){
-        rw->r_wait++;
-        while (rw->w_active || ((rw->w_wait > 0 && cycle == rw->cycle))){
-            pthread_cond_wait(&rw->read, &rw->mutex);
-        }
-        rw->r_wait--;
-    }
-    rw->r_active++;
-    pthread_mutex_unlock(&rw->mutex);
-}*/
-
 void RWMutex_rdlock(RWMutex *rw){
     int cycle;
     pthread_mutex_lock(&rw->mutex);
